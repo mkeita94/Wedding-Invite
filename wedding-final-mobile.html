@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Mariage de Malick Keita & Tiguidanké CFA Camara</title>
+    <!-- Polices de luxe : Cormorant Garamond, Montserrat & Great Vibes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --maroon: #4A0E17;
+            --maroon-dark: #31070e;
+            --gold: #D4AF37;
+            --gold-light: #F4E8C1;
+            --champagne: #F9F6F0;
+            --champagne-dark: #EAE0D5;
+            --black: #1A1A1A;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--maroon-dark);
+            color: var(--black);
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(var(--maroon) 15%, transparent 16%),
+                radial-gradient(var(--maroon) 15%, transparent 16%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+
+        /* --- ÉCRAN 1 : L'ENVELOPPE --- */
+        #envelope-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh; /* Support Android Chrome / Safari barre d'adresse dynamique */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #2a050b 0%, #150205 100%);
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s ease;
+            cursor: pointer;
+            padding: 20px;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 90%;
+            max-width: 420px;
+            height: 280px;
+            cursor: pointer;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .envelope-wrapper * {
+            cursor: pointer;
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--champagne-dark);
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 15px rgba(0,0,0,0.1);
+            border: 1px solid var(--gold);
+        }
+
+        .card-preview {
+            position: absolute;
+            top: 10px;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background-color: var(--champagne);
+            border: 1px solid var(--gold);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.8s ease-in-out 0.4s;
+            z-index: 2;
+        }
+
+        .card-preview h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--maroon);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+
+        .card-preview p {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            color: var(--black);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 180px 420px;
+            border-color: transparent transparent var(--champagne) transparent;
+            z-index: 3;
+            filter: drop-shadow(0 -2px 5px rgba(0,0,0,0.15));
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            pointer-events: none;
+        }
+
+        .envelope-pocket-right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 180px 0 0 420px;
+            border-color: transparent transparent transparent var(--champagne-dark);
+            z-index: 3;
+            opacity: 0.7;
+            border-bottom-right-radius: 8px;
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 140px 210px 0 210px;
+            border-color: var(--champagne-dark) transparent transparent transparent;
+            z-index: 4;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out, z-index 0.1s 0.3s;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            pointer-events: none;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 115px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle, var(--maroon) 0%, var(--maroon-dark) 100%);
+            border-radius: 50%;
+            border: 2px dashed var(--gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 0 8px rgba(212, 175, 55, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+
+        .wax-seal span {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold-light);
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .open .wax-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+        }
+
+        .open .card-preview {
+            transform: translateY(-130px) scale(1.05);
+            z-index: 6;
+        }
+
+        .click-instruction {
+            margin-top: 50px;
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            animation: pulse 2s infinite;
+            text-align: center;
+            padding: 12px 24px;
+            border-radius: 25px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(212,175,55,0.4);
+            cursor: pointer;
+            max-width: 90%;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-5px); }
+        }
+
+        /* --- ÉCRAN 2 : LE SITE DE L'INVITATION --- */
+        #invitation-screen {
+            display: none;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 40px 15px;
+            opacity: 0;
+            transition: opacity 1s ease;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .invitation-card {
+            background-color: var(--champagne);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 50px 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            position: relative;
+            text-align: center;
+            background-image: linear-gradient(135deg, rgba(212,175,55,0.05) 25%, transparent 25%), 
+                              linear-gradient(225deg, rgba(212,175,55,0.05) 25%, transparent 25%);
+            background-size: 40px 40px;
+        }
+
+        .invitation-card::after {
+            content: "";
+            position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .bismillah {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--maroon);
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .couple-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: var(--maroon);
+            margin: 20px 0;
+            line-height: 1.2;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .ampersand {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2rem;
+            color: var(--gold);
+            display: block;
+            margin: 5px 0;
+        }
+
+        .intro-text {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--black);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 35px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            height: 1px;
+            width: 80px;
+            background-color: var(--gold);
+        }
+
+        .divider span {
+            color: var(--gold);
+            margin: 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .event-section {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 8px;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .event-date {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--maroon);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .event-details {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .event-details strong {
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        .location {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.4rem;
+            color: var(--maroon);
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        /* --- BOUTONS INTERACTIFS --- */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-family: 'Montserrat', -apple-system, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-gold {
+            background-color: var(--gold);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold:hover, .btn-gold:active {
+            background-color: #b89728;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--maroon);
+            border: 1px solid var(--maroon);
+        }
+
+        .btn-outline:hover, .btn-outline:active {
+            background-color: var(--maroon);
+            color: var(--white);
+        }
+
+        .btn-maroon {
+            background-color: var(--maroon);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(74, 14, 23, 0.3);
+        }
+
+        .btn-maroon:hover, .btn-maroon:active {
+            background-color: var(--maroon-dark);
+            transform: translateY(-2px);
+        }
+
+        /* --- COMPTE À REBOURS --- */
+        .countdown-container {
+            margin: 35px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .countdown-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.5rem;
+            color: var(--maroon);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .countdown-box {
+            background: var(--maroon);
+            color: var(--gold-light);
+            width: 75px;
+            padding: 15px 5px;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .countdown-box .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+        }
+
+        .countdown-box .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            display: block;
+            opacity: 0.9;
+        }
+
+        .closing-text {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--maroon);
+            margin: 40px 0 10px;
+            line-height: 1.6;
+        }
+
+        .closing-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-top: 10px;
+        }
+
+        /* --- BOUTON MUSIQUE FLOTTANT --- */
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--maroon);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        #music-control svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--gold-light);
+        }
+
+        /* --- RESPONSIVE TABLETTES (601px - 1024px) --- */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .invitation-card { padding: 45px 35px; }
+            .couple-names { font-size: 3.8rem; }
+            .envelope-wrapper { width: 480px; height: 320px; }
+            .envelope-pocket { border-width: 0 0 200px 480px; }
+            .envelope-pocket-right { border-width: 200px 0 0 480px; }
+            .envelope-flap { border-width: 160px 240px 0 240px; }
+            .wax-seal { top: 130px; width: 75px; height: 75px; }
+            .wax-seal span { font-size: 1.8rem; }
+            .countdown-box { width: 85px; padding: 18px 8px; }
+            .countdown-box .number { font-size: 2rem; }
+        }
+
+        /* --- RESPONSIVE MOBILE (< 600px) --- */
+        @media (max-width: 600px) {
+            .invitation-card { padding: 35px 15px; }
+            .couple-names { font-size: 2.8rem; }
+            .event-date { font-size: 1.4rem; }
+            .envelope-wrapper { width: 95%; max-width: 360px; height: 240px; }
+            .envelope-pocket { border-width: 0 0 150px 360px; }
+            .envelope-pocket-right { border-width: 150px 0 0 360px; }
+            .envelope-flap { border-width: 120px 180px 0 180px; }
+            .wax-seal { top: 95px; width: 55px; height: 55px; }
+            .countdown { gap: 8px; }
+            .countdown-box { width: 65px; padding: 10px 5px; }
+            .countdown-box .number { font-size: 1.4rem; }
+            .btn { width: 100%; text-align: center; }
+        }
+
+        /* --- GESTION DU MODE PAYSAGE SUR MOBILE / PETITE TABLETTE --- */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #envelope-screen { justify-content: flex-start; padding-top: 40px; overflow-y: auto; }
+            .click-instruction { margin-top: 20px; margin-bottom: 30px; }
+            .open .card-preview { transform: translateY(-80px) scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ÉCRAN 1 : L'ENVELOPPE INTERACTIVE -->
+    <div id="envelope-screen">
+        <div class="envelope-wrapper" id="envelope" role="button" aria-label="Ouvrir l'invitation">
+            <div class="envelope-back"></div>
+            <div class="card-preview">
+                <h2>Malick & Tiguidanké</h2>
+                <p>Invitation de Mariage<br>25 & 26 Décembre 2026</p>
+            </div>
+            <div class="envelope-pocket"></div>
+            <div class="envelope-pocket-right"></div>
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+                <span>M&T</span>
+            </div>
+        </div>
+        <div class="click-instruction" id="open-btn" role="button">✨ Touchez ici pour ouvrir l'invitation ✨</div>
+    </div>
+
+    <!-- ÉCRAN 2 : L'INVITATION DE MARIAGE -->
+    <div id="invitation-screen">
+        <div class="invitation-card">
+            
+            <div class="bismillah">
+                « Au nom de Dieu, le Tout Miséricordieux, le Très Miséricordieux »
+            </div>
+
+            <p class="intro-text" style="margin-bottom: 10px;">
+                C’est avec une immense joie et une profonde gratitude que
+            </p>
+
+            <h1 class="couple-names">
+                Malick Keita 
+                <span class="ampersand">&</span> 
+                Tiguidanké CFA Camara
+            </h1>
+
+            <p class="intro-text">
+                ont l’honneur de vous annoncer leur union et de vous inviter à partager ce moment unique de leur vie.
+            </p>
+
+            <div class="divider"><span>◈</span></div>
+
+            <!-- COMPTE À REBOURS -->
+            <div class="countdown-container">
+                <div class="countdown-title">Le grand jour dans</div>
+                <div class="countdown">
+                    <div class="countdown-box"><span class="number" id="days">00</span><span class="label">Jours</span></div>
+                    <div class="countdown-box"><span class="number" id="hours">00</span><span class="label">Heures</span></div>
+                    <div class="countdown-box"><span class="number" id="minutes">00</span><span class="label">Min</span></div>
+                    <div class="countdown-box"><span class="number" id="seconds">00</span><span class="label">Sec</span></div>
+                </div>
+            </div>
+
+            <!-- ÉVÉNEMENT 1 : VENDREDI -->
+            <div class="event-section">
+                <div class="event-date">Vendredi 25 décembre 2026</div>
+                <div class="event-details">
+                    <p><strong>9h00 :</strong> Cérémonie du mariage religieux</p>
+                    <p><strong>16h00 :</strong> Cérémonie du Demba</p>
+                </div>
+                <div class="location">
+                    Koloma<br>
+                    <span style="font-size: 1rem; font-family: 'Montserrat', sans-serif; font-weight: normal; color: #555;">Chez les parents de la mariée</span>
+                </div>
+                <div class="btn-group">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Koloma,+Conakry" target="_blank" class="btn btn-gold">📍 Voir sur Google Maps</a>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mariage+Religieux+%26+Demba+-+Malick+%26+Tiguidank%C3%A9&dates=20261225T090000Z/20261225T190000Z&details=C%C3%A9r%C3%A9monie+religieuse+%C3%A0+9h00+et+c%C3%A9r%C3%A9monie+du+Demba+%C3%A0+16h00.&location=Koloma,+Conakry" target="_blank" class="btn btn-outline">📅 Ajouter au calendrier</a>
+                </div>
+            </div>
+
+            <!-- ÉVÉNEMENT 2 : SAMEDI -->
+            <div class="event-section">
+                <div class="event-date">Samedi 26 décembre 2026</div>
+                <div class="event-details">
+                    <p>Nous aurons le plaisir de vous accueillir à la réception de mariage qui débutera à <strong>16h00</strong>.</p>
+                </div>
+                <div class="location">
+                    La Bluezone de Dixinn
+                </div>
+                <div class="btn-group">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Bluezone+de+Dixinn,+Conakry" target="_blank" class="btn btn-gold">📍 Voir sur Google Maps</a>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=R%C3%A9ception+de+Mariage+-+Malick+%26+Tiguidank%C3%A9&dates=20261226T160000Z/20261226T235900Z&details=R%C3%A9ception+de+mariage+de+Malick+Keita+et+Tiguidank%C3%A9+CFA+Camara+%C3%A0+la+Bluezone+de+Dixinn.&location=Bluezone+de+Dixinn,+Conakry" target="_blank" class="btn btn-outline">📅 Ajouter au calendrier</a>
+                </div>
+            </div>
+
+            <div class="divider"><span>◈</span></div>
+
+            <!-- SECTION RSVP & CONTACT -->
+            <div style="margin: 40px 0;">
+                <p class="intro-text" style="margin-bottom: 25px; font-size: 1.1rem;">
+                    Votre présence, vos prières et vos bénédictions seront pour nous le plus précieux des cadeaux en ce jour si important.
+                </p>
+                <div class="btn-group">
+                    <a href="https://wa.me/22400000000?text=Bonjour%2C%20je%20confirme%20avec%20plaisir%20ma%20pr%C3%A9sence%20au%20mariage%20de%20Malick%20et%20Tiguidank%C3%A9%20les%2025%20et%2026%20d%C3%A9cembre%202026." target="_blank" class="btn btn-maroon" style="font-size: 0.95rem; padding: 16px 32px;">
+                        ✉️ Confirmer ma présence (RSVP)
+                    </a>
+                </div>
+                <div class="btn-group" style="margin-top: 15px;">
+                    <a href="https://wa.me/22400000000" target="_blank" class="btn btn-outline" style="border-color: #888; color: #555; font-size: 0.75rem;">
+                        💬 Contacter par WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <div class="closing-text">Avec amour et reconnaissance.</div>
+            <div class="closing-names">Malick & Tiguidanké</div>
+
+        </div>
+    </div>
+
+    <!-- AUDIO & CONTRÔLE -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-control" title="Activer/Désactiver la musique">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const envelopeScreen = document.getElementById('envelope-screen');
+            const envelope = document.getElementById('envelope');
+            const openBtn = document.getElementById('open-btn');
+            const invitationScreen = document.getElementById('invitation-screen');
+            const bgMusic = document.getElementById('bg-music');
+            const musicControl = document.getElementById('music-control');
+            let isOpened = false;
+            let musicPlaying = false;
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            const openInvitation = (e) => {
+                if (e && e.cancelable) e.preventDefault();
+                if (isOpened) return;
+                isOpened = true;
+
+                // 1. Animation d'ouverture
+                envelope.classList.add('open');
+                
+                // 2. Lancement audio compatible Android & iOS
+                if (bgMusic) {
+                    bgMusic.play().then(() => {
+                        musicPlaying = true;
+                        musicControl.style.opacity = '1';
+                    }).catch(err => {
+                        console.warn("Lecture audio automatique bloquée :", err);
+                        musicPlaying = false;
+                        musicControl.style.opacity = '0.5';
+                    });
+                }
+
+                // 3. Transition vers l'invitation
+                setTimeout(() => {
+                    envelopeScreen.style.opacity = '0';
+                    invitationScreen.style.display = 'block';
+                    setTimeout(() => {
+                        invitationScreen.style.opacity = '1';
+                        envelopeScreen.style.visibility = 'hidden';
+                        envelopeScreen.style.pointerEvents = 'none';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 50);
+                }, 1400);
+            };
+
+            // Enregistrer le point de départ d'un toucher pour faire la distinction entre Tap et Swipe sur tablette
+            const handleTouchStart = (e) => {
+                const touch = e.changedTouches ? e.changedTouches[0] : null;
+                if (touch) {
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                }
+            };
+
+            // Ne déclencher que s'il s'agit d'un appui court (Tap), pas d'un glissement de défilement (Swipe)
+            const handleTouchEnd = (e) => {
+                const touch = e.changedTouches ? e.changedTouches[0] : null;
+                if (touch) {
+                    const diffX = Math.abs(touch.clientX - touchStartX);
+                    const diffY = Math.abs(touch.clientY - touchStartY);
+                    if (diffX > 15 || diffY > 15) return; // Ignore le défilement/glissement
+                }
+                openInvitation(e);
+            };
+
+            // Attachement multi-supports : Clic standard (Desktop) + Touch-safe (Android & iOS)
+            envelopeScreen.addEventListener('click', openInvitation);
+            envelopeScreen.addEventListener('touchstart', handleTouchStart, { passive: true });
+            envelopeScreen.addEventListener('touchend', handleTouchEnd);
+
+            // Contrôle de la musique
+            ['click', 'touchend'].forEach(eventType => {
+                musicControl.addEventListener(eventType, (e) => {
+                    e.stopPropagation();
+                    if (e.cancelable) e.preventDefault();
+                    if (musicPlaying) {
+                        bgMusic.pause();
+                        musicControl.style.opacity = '0.5';
+                        musicPlaying = false;
+                    } else {
+                        bgMusic.play().then(() => {
+                            musicControl.style.opacity = '1';
+                            musicPlaying = true;
+                        }).catch(() => {});
+                    }
+                });
+            });
+
+            // Compte à rebours jusqu'au 25 Décembre 2026 à 09:00:00
+            const targetDate = new Date("December 25, 2026 09:00:00").getTime();
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.getElementById("days").innerText = "00";
+                    document.getElementById("hours").innerText = "00";
+                    document.getElementById("minutes").innerText = "00";
+                    document.getElementById("seconds").innerText = "00";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = String(days).padStart(2, '0');
+                document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+                document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+                document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+            };
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
